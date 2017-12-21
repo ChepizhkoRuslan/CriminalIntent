@@ -3,6 +3,8 @@ package com.chepizhko.criminalintent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -13,6 +15,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 
+import java.util.List;
 import java.util.UUID;
 
 import static android.widget.CompoundButton.OnCheckedChangeListener;
@@ -22,7 +25,11 @@ public class CrimeFragment extends Fragment{
     private EditText mTitleField;
     private Button mDateButton;
     private CheckBox mSolvedCheckBox;
+    private Button mButtontStart, mButtonEnd;
     private static final String ARG_CRIME_ID = "crime_id";
+    private static final String DIALOG_DATE = "DialogDate";
+    private List<Crime> mCrimes;
+    private int mCurrent;
 
     public static CrimeFragment newInstance(UUID crimeId) {
         Bundle args = new Bundle();
@@ -37,6 +44,8 @@ public class CrimeFragment extends Fragment{
         super.onCreate(savedInstanceState);
         UUID crimeId = (UUID) getArguments().getSerializable(ARG_CRIME_ID);
         mCrime = CrimeLab.get(getActivity()).getCrime(crimeId);
+        mCrimes = CrimeLab.get(getActivity()).getCrimes();
+        mCurrent = mCrimes.size();
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,7 +70,14 @@ public class CrimeFragment extends Fragment{
 
         mDateButton = (Button) v.findViewById(R.id.crime_date);
         mDateButton.setText(mCrime.getDate().toString());
-        mDateButton.setEnabled(false);
+        mDateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager manager = getFragmentManager();
+                DatePickerFragment dialog = new DatePickerFragment();
+                dialog.show(manager, DIALOG_DATE);
+            }
+        });
 
         mSolvedCheckBox = (CheckBox)v.findViewById(R.id.crime_solved);
         mSolvedCheckBox.setChecked(mCrime.isSolved());
@@ -69,6 +85,21 @@ public class CrimeFragment extends Fragment{
             @Override
             public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
                 mCrime.setSolved(isChecked);
+            }
+        });
+
+        mButtontStart = (Button)v.findViewById(R.id.btn_start);
+        mButtontStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((ViewPager)getActivity().findViewById(R.id.crime_view_pager)).setCurrentItem(0);
+            }
+        });
+        mButtonEnd = (Button)v.findViewById(R.id.btn_end);
+        mButtonEnd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((ViewPager)getActivity().findViewById(R.id.crime_view_pager)).setCurrentItem(mCurrent);
             }
         });
 

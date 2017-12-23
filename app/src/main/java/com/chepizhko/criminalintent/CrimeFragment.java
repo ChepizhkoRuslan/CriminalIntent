@@ -18,7 +18,6 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 import static android.widget.CompoundButton.OnCheckedChangeListener;
@@ -32,7 +31,6 @@ public class CrimeFragment extends Fragment{
     private static final String ARG_CRIME_ID = "crime_id";
     private static final String DIALOG_DATE = "DialogDate";
     private static final int REQUEST_DATE = 0;
-    private List<Crime> mCrimes;
     private int mCurrent;
 
     public static CrimeFragment newInstance(UUID crimeId) {
@@ -48,8 +46,7 @@ public class CrimeFragment extends Fragment{
         super.onCreate(savedInstanceState);
         UUID crimeId = (UUID) getArguments().getSerializable(ARG_CRIME_ID);
         mCrime = CrimeLab.get(getActivity()).getCrime(crimeId);
-        mCrimes = CrimeLab.get(getActivity()).getCrimes();
-        mCurrent = mCrimes.size();
+        mCurrent = CrimeLab.get(getActivity()).getCrimes().size();;
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

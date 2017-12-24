@@ -27,11 +27,12 @@ public class CrimeFragment extends Fragment{
     private EditText mTitleField;
     private Button mDateButton;
     private CheckBox mSolvedCheckBox;
-    private Button mButtontStart, mButtonEnd;
+    private Button mButtontStart, mButtonEnd, mButtonDelete;
     private static final String ARG_CRIME_ID = "crime_id";
     private static final String DIALOG_DATE = "DialogDate";
     private static final int REQUEST_DATE = 0;
     private int mCurrent;
+
 
     public static CrimeFragment newInstance(UUID crimeId) {
         Bundle args = new Bundle();
@@ -47,6 +48,11 @@ public class CrimeFragment extends Fragment{
         UUID crimeId = (UUID) getArguments().getSerializable(ARG_CRIME_ID);
         mCrime = CrimeLab.get(getActivity()).getCrime(crimeId);
         mCurrent = CrimeLab.get(getActivity()).getCrimes().size();;
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        CrimeLab.get(getActivity()).updateCrime(mCrime);
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -102,6 +108,14 @@ public class CrimeFragment extends Fragment{
             @Override
             public void onClick(View view) {
                 ((ViewPager)getActivity().findViewById(R.id.crime_view_pager)).setCurrentItem(mCurrent);
+            }
+        });
+        mButtonDelete = (Button)v.findViewById(R.id.btn_delete_crime);
+        mButtonDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CrimeLab.get(getActivity()).deleteCrime(mCrime);
+                getActivity().finish();
             }
         });
 

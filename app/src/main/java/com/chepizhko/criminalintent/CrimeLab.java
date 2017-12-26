@@ -10,10 +10,12 @@ import com.chepizhko.criminalintent.database.CrimeBaseHelper;
 import com.chepizhko.criminalintent.database.CrimeCursorWrapper;
 import com.chepizhko.criminalintent.database.CrimeDbSchema.CrimeTable;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+// Класс CrimeLab отвечает за все, что относится к долгосрочному хранению данных в CriminalIntent
 public class CrimeLab {
     private static CrimeLab sCrimeLab;
     //private List<Crime> mCrimes;
@@ -84,6 +86,13 @@ public class CrimeLab {
             cursor.close();
         }
     }
+    // метод получает объект Crime и отдаёт объект File представляющий нужное место.
+    public File getPhotoFile(Crime crime) {
+        File filesDir = mContext.getFilesDir();
+        return new File(filesDir, crime.getPhotoFilename());
+//        if (externalFilesDir == null) {
+//        }
+    }
     // метод обновления строк в базе данных
     public void updateCrime(Crime crime) {
         String uuidString = crime.getId().toString();
@@ -113,6 +122,7 @@ public class CrimeLab {
         values.put(CrimeTable.Cols.TITLE, crime.getTitle());
         values.put(CrimeTable.Cols.DATE, crime.getDate().getTime());
         values.put(CrimeTable.Cols.SOLVED, crime.isSolved() ? 1 : 0);
+        values.put(CrimeTable.Cols.SUSPECT, crime.getSuspect());
         return values;
     }
 }

@@ -47,7 +47,7 @@ public class PhotoFragment extends DialogFragment{
 //            e.printStackTrace();
 //        }
 //        mImageViewPhoto.setImageBitmap(bitmap);
-
+        // построить объект Bitmap из файла
         updatePhotoView();
 
         return new AlertDialog.Builder(getActivity())

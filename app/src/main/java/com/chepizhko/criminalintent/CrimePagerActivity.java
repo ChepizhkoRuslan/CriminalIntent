@@ -12,7 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import java.util.List;
 import java.util.UUID;
 
-public class CrimePagerActivity extends AppCompatActivity {
+public class CrimePagerActivity extends AppCompatActivity implements CrimeFragment.Callbacks{
     private ViewPager mViewPager;
     private List<Crime> mCrimes;
     private static final String EXTRA_CRIME_ID = "com.chepizhko.criminalintent.crime_id";
@@ -50,5 +50,12 @@ public class CrimePagerActivity extends AppCompatActivity {
                 break;
             }
         }
+    }
+    // Интерфейс CrimeFragment.Callbacks должен быть реализован во всех активностях,
+    // выполняющих функции хоста для CrimeFragment.
+    // Следовательно, пустую реализацию также следует включить и в CrimePagerActivity.
+    @Override
+    public void onCrimeUpdated(Crime crime) {
+
     }
 }

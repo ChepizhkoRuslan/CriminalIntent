@@ -19,8 +19,11 @@
     <string name="send_report">Send crime report via</string>
 
     <string name="subtitle_format">%1$d crimes</string>
+    <string name="start">START</string>
+    <string name="delete_crime">DELETE CRIME</string>
     <plurals name="subtitle_plural">
         <item quantity="one">%1$d crime</item>
         <item quantity="other">%1$d crimes</item>
     </plurals>
+    <string name="end">END</string>
 </resources>

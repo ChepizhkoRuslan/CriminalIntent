@@ -30,13 +30,14 @@ public class CrimeListFragment extends Fragment {
     // Затем активность-хост преобразуется к Callbacks, а результат присваивается этой переменной
     private Callbacks mCallbacks;
 
-     // Обязательный интерфейс обратного вызова для активности-хоста.
-     // Теперь у CrimeListFragment имеется механизм вызова методов активности-хоста.
-     // Неважно, какая активность является хостом, — если она реализует CrimeListFragment.Callbacks,
-     // внутренняя реализация CrimeListFragment будет работать одинаково.
+    // Обязательный интерфейс обратного вызова для активности-хоста.
+    // Теперь у CrimeListFragment имеется механизм вызова методов активности-хоста.
+    // Неважно, какая активность является хостом, — если она реализует CrimeListFragment.Callbacks,
+    // внутренняя реализация CrimeListFragment будет работать одинаково.
     public interface Callbacks {
         void onCrimeSelected(Crime crime);
     }
+
     // Активность назначается в методе жизненного цикла Fragment
     @Override
     public void onAttach(Context context) {
@@ -50,6 +51,7 @@ public class CrimeListFragment extends Fragment {
         // сообщите FragmentManager, что экземпляр CrimeListFragment должен получать обратные вызовы меню
         setHasOptionsMenu(true);
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_crime_list, container, false);
@@ -61,11 +63,13 @@ public class CrimeListFragment extends Fragment {
         updateUI();
         return view;
     }
+
     @Override
     public void onResume() {
         super.onResume();
         updateUI();
     }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
@@ -78,6 +82,7 @@ public class CrimeListFragment extends Fragment {
             subtitleItem.setTitle(R.string.show_subtitle);
         }
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -102,18 +107,20 @@ public class CrimeListFragment extends Fragment {
                 return super.onOptionsItemSelected(item);
         }
     }
+
     private void updateSubtitle() {
         CrimeLab crimeLab = CrimeLab.get(getActivity());
         int crimeCount = crimeLab.getCrimes().size();
         //String subtitle = getString(R.string.subtitle_format, crimeCount);
         // метод выбирает из ресурсов правильное слово в единственном или множественном числе
-        String subtitle = getResources().getQuantityString(R.plurals.subtitle_plural,crimeCount,crimeCount);
+        String subtitle = getResources().getQuantityString(R.plurals.subtitle_plural, crimeCount, crimeCount);
         if (!mSubtitleVisible) {
             subtitle = null;
         }
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         activity.getSupportActionBar().setSubtitle(subtitle);
     }
+
     public void updateUI() {
         CrimeLab crimeLab = CrimeLab.get(getActivity());
         List<Crime> crimes = crimeLab.getCrimes();
@@ -129,11 +136,13 @@ public class CrimeListFragment extends Fragment {
         }
         updateSubtitle();
     }
-    private class CrimeHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+
+    private class CrimeHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView mTitleTextView;
         private TextView mDateTextView;
         private Crime mCrime;
         private ImageView mSolvedImageView;
+
         public CrimeHolder(LayoutInflater inflater, ViewGroup parent) {
 
             super(inflater.inflate(R.layout.list_item_crime, parent, false));
@@ -142,7 +151,8 @@ public class CrimeListFragment extends Fragment {
             mDateTextView = (TextView) itemView.findViewById(R.id.crime_data);
             mSolvedImageView = (ImageView) itemView.findViewById(R.id.crime_solved);
         }
-        public void bind(Crime crime){
+
+        public void bind(Crime crime) {
             mCrime = crime;
             mTitleTextView.setText(mCrime.getTitle());
             mDateTextView.setText(DateFormat.getDateInstance().format(mCrime.getDate()));
@@ -154,8 +164,10 @@ public class CrimeListFragment extends Fragment {
             mCallbacks.onCrimeSelected(mCrime);
         }
     }
+
     private class CrimeAdapter extends RecyclerView.Adapter<CrimeHolder> {
         private List<Crime> mCrimes;
+
         public CrimeAdapter(List<Crime> crimes) {
             mCrimes = crimes;
         }
@@ -167,11 +179,12 @@ public class CrimeListFragment extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(CrimeHolder holder, int position){
+        public void onBindViewHolder(CrimeHolder holder, int position) {
             Crime crime = mCrimes.get(position);
             try {
                 holder.bind(crime);
-            }catch ( NullPointerException e){}
+            } catch (NullPointerException e) {
+            }
 
         }
 
@@ -184,13 +197,17 @@ public class CrimeListFragment extends Fragment {
             mCrimes = crimes;
         }
     }
+
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean(SAVED_SUBTITLE_VISIBLE, mSubtitleVisible);
     }
+
     @Override
     public void onDetach() {
         super.onDetach();
         mCallbacks = null;
     }
+
+
 }

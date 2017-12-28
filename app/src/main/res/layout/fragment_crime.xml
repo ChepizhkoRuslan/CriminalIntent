@@ -82,7 +82,7 @@
             android:layout_weight="1"
             android:drawableLeft="@drawable/arrow_left"
             android:drawablePadding="4dp"
-            android:text="START"/>
+            android:text="@string/start"/>
 
         <Button
             android:id="@+id/btn_end"
@@ -91,14 +91,14 @@
             android:layout_weight="1"
             android:drawableRight="@drawable/arrow_right"
             android:drawablePadding="4dp"
-            android:text="END"/>
+            android:text="@string/end"/>
     </LinearLayout>
 
     <Button
         android:id="@+id/btn_delete_crime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="DELETE CRIME"/>
+        android:text="@string/delete_crime"/>
 
     <Button
         android:id="@+id/crime_suspect"

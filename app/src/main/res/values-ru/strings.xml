@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">Преступления</string>
+    <string name="crime_title_hint">Введите название преступления.</string>
+    <string name="crime_title_label">Название</string>
+    <string name="crime_details_label">Подробная информация</string>
+    <string name="crime_solved_label">Раскрыто</string>
+    <string name="date_picker_title">Дата совершения преступления:</string>
+    <string name="new_crime">Новое преступление</string>
+    <string name="show_subtitle">Показать субтитры</string>
+    <string name="hide_subtitle">Скрыть субтитры</string>
+    <string name="crime_suspect_text">Выберите Подозреваемого</string>
+    <string name="crime_report_text">Отправлять сообщения о преступлении</string>
+    <string name="crime_report">%1$s! Преступление было обнаружено %2$s. %3$s и %4$s</string>
+    <string name="crime_report_solved">Дело раскрыто</string>
+    <string name="crime_report_unsolved">Дело не раскрыто</string>
+    <string name="crime_report_no_suspect">подозреваемого нет.</string>
+    <string name="crime_report_suspect">подозреваемый %s.</string>
+    <string name="crime_report_subject">Отчет о совершенных преступлениях</string>
+    <string name="send_report">Отправлять сообщения о преступлении через</string>
+
+    <string name="subtitle_format">%1$d преступлений</string>
+    <plurals name="subtitle_plural" tools:ignore="MissingQuantity">
+        <item quantity="one">%1$d преступление</item>
+        <item quantity="other">%1$d преступлений</item>
+    </plurals>
+    <string name="start">В начало</string>
+    <string name="end">В конец</string>
+    <string name="delete_crime">Удалить запись</string>
+</resources>
